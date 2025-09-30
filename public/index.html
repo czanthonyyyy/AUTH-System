@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Autenticación - Inicio</title>
+    <meta name="description" content="Sistema de autenticación seguro con Firebase">
+    
+    <!-- TailwindCSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- CSS personalizado -->
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔐</text></svg>">
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <!-- Loading Spinner -->
+    <div id="loading" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" style="display: none;">
+        <div class="bg-white p-6 rounded-lg shadow-lg flex items-center space-x-3">
+            <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-500"></div>
+            <span class="text-gray-700">Cargando...</span>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-6">
+                <div class="flex items-center">
+                    <div class="text-2xl mr-3">🔐</div>
+                    <h1 class="text-2xl font-bold text-gray-900">Auth System</h1>
+                </div>
+                <!-- Navegación para usuarios no autenticados -->
+                <nav id="guestNav" class="hidden md:flex space-x-8">
+                    <a href="index.html" class="text-blue-600 font-medium">Inicio</a>
+                    <a href="login.html" class="text-gray-500 hover:text-blue-600 transition-colors">Iniciar Sesión</a>
+                    <a href="signup.html" class="text-gray-500 hover:text-blue-600 transition-colors">Registrarse</a>
+                </nav>
+                
+                <!-- Navegación para usuarios autenticados -->
+                <nav id="userNav" class="hidden md:flex items-center space-x-6">
+                    <a href="index.html" class="text-blue-600 font-medium">Inicio</a>
+                    <a href="dashboard.html" class="text-gray-500 hover:text-blue-600 transition-colors">Dashboard</a>
+                    
+                    <!-- Perfil del usuario -->
+                    <div class="flex items-center space-x-3 bg-gray-100 rounded-lg px-4 py-2">
+                        <div id="userAvatarSmall" class="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-bold">
+                            U
+                        </div>
+                        <div class="flex flex-col">
+                            <span id="userNameSmall" class="text-sm font-medium text-gray-900">Usuario</span>
+                            <span class="text-xs text-gray-500">En línea</span>
+                        </div>
+                        <button 
+                            id="logoutButtonHeader" 
+                            class="text-red-600 hover:text-red-700 text-sm font-medium transition-colors"
+                        >
+                            Salir
+                        </button>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <!-- Hero Section -->
+        <div class="text-center mb-16">
+            <h2 class="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
+                Sistema de <span class="text-blue-600">Autenticación</span>
+            </h2>
+            <p class="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+                Una solución segura y moderna para la autenticación de usuarios, 
+                construida con Firebase y diseñada con las mejores prácticas de seguridad.
+            </p>
+            
+            <!-- Botones de acción -->
+            <div id="authButtons" class="flex flex-col sm:flex-row gap-4 justify-center">
+                <!-- Estos botones se mostrarán si el usuario NO está autenticado -->
+                <a href="signup.html" 
+                   class="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors shadow-lg">
+                    Crear Cuenta
+                </a>
+                <a href="login.html" 
+                   class="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold border-2 border-blue-600 hover:bg-blue-50 transition-colors shadow-lg">
+                    Iniciar Sesión
+                </a>
+            </div>
+
+            <!-- Botón para usuarios autenticados -->
+            <div id="dashboardButton" class="hidden">
+                <a href="dashboard.html" 
+                   class="bg-green-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors shadow-lg inline-block">
+                    Ir al Dashboard
+                </a>
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <div class="grid md:grid-cols-3 gap-8 mb-16">
+            <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+                <div class="text-4xl mb-4">🛡️</div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">Seguridad Avanzada</h3>
+                <p class="text-gray-600">
+                    Autenticación segura con Firebase Auth y reglas de seguridad personalizadas.
+                </p>
+            </div>
+            
+            <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+                <div class="text-4xl mb-4">⚡</div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">Rápido y Confiable</h3>
+                <p class="text-gray-600">
+                    Respuesta instantánea y sincronización en tiempo real con Firestore.
+                </p>
+            </div>
+            
+            <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+                <div class="text-4xl mb-4">📱</div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">Responsive Design</h3>
+                <p class="text-gray-600">
+                    Funciona perfectamente en dispositivos móviles, tablets y escritorio.
+                </p>
+            </div>
+        </div>
+
+        <!-- Technology Stack -->
+        <div class="bg-white rounded-lg shadow-lg p-8">
+            <h3 class="text-2xl font-bold text-gray-900 mb-6 text-center">Tecnologías Utilizadas</h3>
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-6">
+                <div class="text-center">
+                    <div class="text-3xl mb-2">🔥</div>
+                    <p class="text-sm font-medium text-gray-700">Firebase</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl mb-2">⚛️</div>
+                    <p class="text-sm font-medium text-gray-700">JavaScript</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl mb-2">🎨</div>
+                    <p class="text-sm font-medium text-gray-700">TailwindCSS</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl mb-2">📄</div>
+                    <p class="text-sm font-medium text-gray-700">HTML5</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl mb-2">🗄️</div>
+                    <p class="text-sm font-medium text-gray-700">Firestore</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-gray-400">
+                © 2024 Sistema de Autenticación. Construido con Firebase y TailwindCSS.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script type="module">
+        // Importar funciones de autenticación
+        import { initAuth, getCurrentUser, logoutUser, getUserData } from './js/auth.js';
+        
+        // Inicializar autenticación
+        initAuth();
+        
+        // Función para obtener iniciales del nombre
+        function getInitials(fullName) {
+            return fullName
+                .split(' ')
+                .map(name => name.charAt(0))
+                .join('')
+                .toUpperCase()
+                .substring(0, 2);
+        }
+        
+        // Función para actualizar la interfaz según el estado de autenticación
+        async function updateUI() {
+            const currentUser = getCurrentUser();
+            const authButtons = document.getElementById('authButtons');
+            const dashboardButton = document.getElementById('dashboardButton');
+            const guestNav = document.getElementById('guestNav');
+            const userNav = document.getElementById('userNav');
+            const userAvatarSmall = document.getElementById('userAvatarSmall');
+            const userNameSmall = document.getElementById('userNameSmall');
+            
+            if (currentUser) {
+                // Usuario autenticado - mostrar perfil y botón de dashboard
+                authButtons.classList.add('hidden');
+                dashboardButton.classList.remove('hidden');
+                guestNav.classList.add('hidden');
+                userNav.classList.remove('hidden');
+                
+                // Actualizar información del usuario en el header
+                const displayName = currentUser.displayName || 'Usuario';
+                const initials = getInitials(displayName);
+                
+                if (userAvatarSmall) {
+                    userAvatarSmall.textContent = initials;
+                }
+                if (userNameSmall) {
+                    userNameSmall.textContent = displayName;
+                }
+                
+                // Configurar botón de logout en el header
+                const logoutButtonHeader = document.getElementById('logoutButtonHeader');
+                if (logoutButtonHeader) {
+                    logoutButtonHeader.addEventListener('click', async (e) => {
+                        e.preventDefault();
+                        const confirmed = confirm('¿Estás seguro de que quieres cerrar sesión?');
+                        if (confirmed) {
+                            await logoutUser();
+                        }
+                    });
+                }
+                
+            } else {
+                // Usuario no autenticado - mostrar botones de login/signup
+                authButtons.classList.remove('hidden');
+                dashboardButton.classList.add('hidden');
+                guestNav.classList.remove('hidden');
+                userNav.classList.add('hidden');
+            }
+        }
+        
+        // Verificar estado de autenticación al cargar la página
+        document.addEventListener('DOMContentLoaded', () => {
+            updateUI();
+        });
+        
+        // Escuchar cambios en el estado de autenticación
+        import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+        import { auth } from './js/firebaseConfig.js';
+        
+        onAuthStateChanged(auth, () => {
+            updateUI();
+        });
+    </script>
+</body>
+</html>
